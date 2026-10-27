@@ -1,0 +1,5 @@
+# Preview copy of the Investsure site.
+# The live site will be https://www.investsure.ca — this copy must stay out of
+# search results, or the two addresses would compete for the same pages.
+User-agent: *
+Disallow: /
