@@ -11,23 +11,48 @@ folder is the whole site.
 | `index.html` | The site — every section, and the broker data near the bottom of the file |
 | `privacy.html` | Privacy policy (PIPEDA) |
 | `*.jpg`, `*.png` | Photographs and the logo |
-| `robots.txt` | Keeps the preview copy out of search results — see below |
+
+## Preview
+
+Until the domain is switched, the site is visible at
+https://romanova21.github.io/investsure-site/ — every push to `main` shows there
+within a minute or two. Both pages name `https://www.investsure.ca/` as their
+canonical address, so search engines credit the real domain, not the preview.
 
 ## Putting it online
 
-Copy every file in this folder into the web root of the hosting account
-(`public_html` on cPanel). Nothing needs to be installed or compiled.
+The domain `investsure.ca` is registered at GoDaddy (DNS servers
+`ns07/ns08.domaincontrol.com`). There are two ways to publish; choose one.
 
-Two things to do once the files are there:
+### Option A — point the domain at this repository (recommended, done once)
 
-1. **Issue an SSL certificate** and turn on the redirect from `http://` to
-   `https://`. The certificate on investsure.ca expired in August 2023.
-2. **Delete `robots.txt`**, or replace its contents with `User-agent: *` and
-   `Allow: /`. On the real domain the site has to be indexed; the file in this
-   repository exists only to keep the preview copy invisible to Google.
+In GoDaddy → My Products → investsure.ca → DNS, change only these records:
 
-Do not change the MX records: the mail for `info@investsure.ca` runs through
-Microsoft 365 and is not touched by the website.
+| Type | Name | Value | Action |
+|---|---|---|---|
+| A | `@` | `50.63.179.127` | delete (the old hosting) |
+| A | `@` | `185.199.108.153` | add |
+| A | `@` | `185.199.109.153` | add |
+| A | `@` | `185.199.110.153` | add |
+| A | `@` | `185.199.111.153` | add |
+| CNAME | `www` | `romanova21.github.io` | change (now it points to `@`) |
+
+Then, in this repository: Settings → Pages → Custom domain `www.investsure.ca`,
+and tick "Enforce HTTPS" once GitHub has issued the certificate (it does that
+itself, usually within an hour). From then on every change is a push to `main`;
+nobody needs the GoDaddy account again.
+
+### Option B — upload the files to the GoDaddy hosting
+
+Copy every file except `README.md` and `.gitignore` into the web root of the
+hosting account (`public_html` on cPanel). Then issue an SSL certificate and turn
+on the redirect from `http://` to `https://` — the certificate on investsure.ca
+expired in August 2023. Every later change has to be uploaded the same way.
+
+### Either way
+
+Do not touch the MX and TXT records: the mail for `info@investsure.ca` runs
+through Microsoft 365 and is not part of the website.
 
 ## Editing a broker
 
